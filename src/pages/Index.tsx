@@ -1,6 +1,5 @@
-
 import React from "react";
-import { Navigation } from "@/components/Navigation";
+import { Dock } from "@/components/Dock";
 import { SkillCard } from "@/components/ui/skill-card";
 import { ProjectCard } from "@/components/ui/project-card";
 import { MetricCard } from "@/components/ui/metric-card";
@@ -9,29 +8,20 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { Button } from "@/components/ui/button";
 import { 
   Code, 
-  Database, 
-  GitBranch, 
-  Globe, 
-  Layers, 
-  PenTool, 
-  Server, 
-  Smartphone, 
-  Star, 
-  User, 
   ChevronRight,
   Mail,
   Github,
   Linkedin,
-  Twitter
+  Twitter,
+  User
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navigation />
+      <Dock />
 
-      {/* Hero Section */}
       <section id="home" className="relative py-20 md:py-32 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent" />
         <div className="container mx-auto relative z-10">
@@ -56,7 +46,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About Section */}
       <section id="about" className="py-16 px-6 bg-card/50">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">About Me</h2>
@@ -107,7 +96,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Skills Section */}
       <section id="skills" className="py-16 px-6">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-4 text-center">Skills</h2>
@@ -206,7 +194,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
       <section id="projects" className="py-16 px-6 bg-card/50">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-4 text-center">My Projects</h2>
@@ -260,7 +247,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="py-16 px-6">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-4 text-center">Get in Touch</h2>
@@ -325,8 +311,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 bg-card/50 border-t border-border">
+      <footer className="py-8 px-6 bg-card/50 border-t border-border pb-24">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
