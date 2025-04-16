@@ -6,16 +6,24 @@ import { Button } from "@/components/ui/button";
 
 interface DockProps {
   className?: string;
+  activeSection: string;
+  setActiveSection: (section: string) => void;
 }
 
-const Dock = ({ className }: DockProps) => {
+const Dock = ({ className, activeSection, setActiveSection }: DockProps) => {
   const navItems = [
-    { label: "Home", icon: <Home className="w-5 h-5" />, href: "#home" },
-    { label: "About", icon: <User className="w-5 h-5" />, href: "#about" },
-    { label: "Skills", icon: <Code className="w-5 h-5" />, href: "#skills" },
-    { label: "Projects", icon: <Briefcase className="w-5 h-5" />, href: "#projects" },
-    { label: "Contact", icon: <Mail className="w-5 h-5" />, href: "#contact" }
+    { id: "home", label: "Home", icon: <Home className="w-5 h-5" /> },
+    { id: "about", label: "About", icon: <User className="w-5 h-5" /> },
+    { id: "skills", label: "Skills", icon: <Code className="w-5 h-5" /> },
+    { id: "projects", label: "Projects", icon: <Briefcase className="w-5 h-5" /> },
+    { id: "contact", label: "Contact", icon: <Mail className="w-5 h-5" /> }
   ];
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    setActiveSection(sectionId);
+    window.history.pushState({}, "", `#${sectionId}`);
+  };
 
   return (
     <div className={cn(
@@ -25,14 +33,20 @@ const Dock = ({ className }: DockProps) => {
       <div className="bg-background/80 backdrop-blur-lg border border-border rounded-full px-4 py-2 shadow-lg flex items-center gap-2">
         {navItems.map((item) => (
           <a
-            key={item.label}
-            href={item.href}
+            key={item.id}
+            href={`#${item.id}`}
             className="relative group"
+            onClick={(e) => handleClick(e, item.id)}
           >
             <Button
-              variant="ghost"
+              variant={activeSection === item.id ? "default" : "ghost"}
               size="icon"
-              className="rounded-full transition-all duration-300 hover:bg-primary/10"
+              className={cn(
+                "rounded-full transition-all duration-300",
+                activeSection === item.id 
+                  ? "bg-primary text-primary-foreground" 
+                  : "hover:bg-primary/10"
+              )}
               aria-label={item.label}
             >
               {item.icon}
