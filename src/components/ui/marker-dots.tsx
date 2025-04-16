@@ -7,6 +7,8 @@ interface MarkerDotsProps {
   inRange: number;
   outOfRange: number;
   className?: string;
+  size?: "sm" | "md" | "lg";
+  glow?: boolean;
 }
 
 const MarkerDots = ({
@@ -14,11 +16,19 @@ const MarkerDots = ({
   inRange,
   outOfRange,
   className,
+  size = "md",
+  glow = true
 }: MarkerDotsProps) => {
   const totalMarkers = optimal + inRange + outOfRange;
   
   // Generate a random ID for uniqueness
   const id = React.useId();
+  
+  const dotSizeClass = {
+    "sm": "w-1.5 h-1.5",
+    "md": "w-2 h-2",
+    "lg": "w-3 h-3"
+  };
   
   const renderDots = (count: number, type: "optimal" | "in-range" | "out-of-range") => {
     const colorClass = {
@@ -33,14 +43,16 @@ const MarkerDots = ({
       <div
         key={`${type}-${index}-${id}`}
         className={cn(
-          "w-2 h-2 rounded-full animate-pulse-glow",
+          "rounded-full",
+          glow ? "animate-pulse-glow" : "",
+          dotSizeClass[size],
           colorClass[type]
         )}
         style={{ 
           animationDelay: animationDelays[index % animationDelays.length],
-          boxShadow: `0 0 8px 0 ${type === "optimal" ? "rgba(var(--secondary), 0.6)" : 
-                                    type === "in-range" ? "rgba(250, 204, 21, 0.6)" : 
-                                    "rgba(var(--accent), 0.6)"}` 
+          boxShadow: glow ? `0 0 8px 0 ${type === "optimal" ? "rgba(var(--secondary), 0.6)" : 
+                                      type === "in-range" ? "rgba(250, 204, 21, 0.6)" : 
+                                      "rgba(var(--accent), 0.6)"}` : 'none'
         }}
       />
     ));

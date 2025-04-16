@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Dock } from "@/components/Dock";
 import { SkillCard } from "@/components/ui/skill-card";
 import { ProjectCard } from "@/components/ui/project-card";
+import { ProjectDetails, ProjectDetailsProps } from "@/components/ui/project-details";
 import { MetricCard } from "@/components/ui/metric-card";
 import { MarkerDots } from "@/components/ui/marker-dots";
 import { ProgressBar } from "@/components/ui/progress-bar";
@@ -18,16 +18,157 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
+const projectsData = [
+  {
+    title: "E-Commerce Platform",
+    description: "A full-featured online shopping platform with payment processing, user authentication, and inventory management. Developed with a focus on performance and user experience.",
+    image: "/lovable-uploads/05bf8120-90a5-4620-822f-61f2ad9fe5a9.png",
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe API"],
+    features: [
+      "User authentication and profile management",
+      "Product search and filtering system",
+      "Shopping cart and checkout process",
+      "Payment processing with Stripe",
+      "Order tracking and history"
+    ],
+    challenges: [
+      "Optimized product catalog performance for large inventory",
+      "Implemented secure payment processing with robust error handling",
+      "Designed responsive UI that works seamlessly on all devices"
+    ],
+    repoUrl: "#",
+    liveUrl: "#",
+    timeline: "3 months",
+    role: "Lead Developer"
+  },
+  {
+    title: "Health Dashboard",
+    description: "An interactive dashboard for tracking health metrics with data visualization and personalized recommendations based on user data and medical standards.",
+    image: "/lovable-uploads/72b4d528-a506-432c-9f74-614feb3f59f8.png",
+    technologies: ["React", "D3.js", "Firebase", "Material UI", "Node.js"],
+    features: [
+      "Personalized health metrics tracking",
+      "Interactive data visualizations",
+      "Goal setting and progress tracking",
+      "Integration with fitness devices",
+      "Customized health recommendations"
+    ],
+    challenges: [
+      "Created complex data visualizations optimized for mobile devices",
+      "Built secure storage for sensitive health information",
+      "Designed algorithm for personalized recommendations"
+    ],
+    repoUrl: "#",
+    liveUrl: "#",
+    timeline: "4 months",
+    role: "Frontend Developer & UI Designer"
+  },
+  {
+    title: "Portfolio Website",
+    description: "A modern portfolio website showcasing projects, skills, and experience with a sleek and responsive design. Features custom animations and interactive elements.",
+    image: "/lovable-uploads/b8f0fe64-a3d7-41f4-a984-c300d900a3c7.png",
+    technologies: ["React", "Three.js", "GSAP", "Tailwind CSS"],
+    features: [
+      "Interactive 3D elements and animations",
+      "Dark/light mode with smooth transitions",
+      "Responsive design for all devices",
+      "Project showcase with detailed case studies",
+      "Contact form with validation"
+    ],
+    challenges: [
+      "Optimized 3D renderings for performance across devices",
+      "Created custom animations that enhance UX without impacting performance",
+      "Implemented accessibility features for users with disabilities"
+    ],
+    repoUrl: "#",
+    liveUrl: "#",
+    timeline: "2 months",
+    role: "Designer & Developer"
+  },
+  {
+    title: "Task Management App",
+    description: "A collaborative task management application with real-time updates, file sharing, and team communication features designed for remote teams.",
+    image: "/lovable-uploads/9ab79394-c30f-413e-8dea-5ff486b28abe.png",
+    technologies: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS", "Socket.io"],
+    features: [
+      "Real-time collaboration and updates",
+      "Task assignment and priority management",
+      "File sharing and document collaboration",
+      "Team chat and communication tools",
+      "Calendar integration and deadline reminders"
+    ],
+    challenges: [
+      "Built real-time syncing system for collaborative task editing",
+      "Created notification system for task updates and deadlines",
+      "Designed intuitive UX for complex team workflows"
+    ],
+    repoUrl: "#",
+    liveUrl: "#",
+    timeline: "6 months",
+    role: "Full Stack Developer"
+  },
+  {
+    title: "Social Media Platform",
+    description: "A social networking platform with user profiles, news feeds, messaging, and content sharing capabilities focused on creative professionals.",
+    image: "/lovable-uploads/06b97919-d2fb-4bc4-b977-f466c48ff6f0.png",
+    technologies: ["React", "GraphQL", "Apollo", "PostgreSQL", "Redis"],
+    features: [
+      "User profiles and portfolio showcases",
+      "Content sharing and discovery system",
+      "Direct messaging and group conversations",
+      "Project collaboration tools",
+      "Analytics for content creators"
+    ],
+    challenges: [
+      "Developed efficient content recommendation algorithm",
+      "Built scalable messaging system with real-time capabilities",
+      "Created content moderation tools and reporting system"
+    ],
+    repoUrl: "#",
+    liveUrl: "#",
+    timeline: "8 months",
+    role: "Backend Developer"
+  },
+  {
+    title: "Mobile Fitness App",
+    description: "A mobile application for tracking workouts, nutrition, and fitness goals with personalized coaching and progress tracking capabilities.",
+    image: "/lovable-uploads/a0bcd973-31c1-4739-b7ef-dad53221c251.png",
+    technologies: ["React Native", "Redux", "Firebase", "Node.js", "TensorFlow.js"],
+    features: [
+      "Workout planning and tracking",
+      "Nutrition logging and meal planning",
+      "Progress visualization and analytics",
+      "AI-powered form correction for exercises",
+      "Community challenges and social features"
+    ],
+    challenges: [
+      "Implemented machine learning for exercise form analysis",
+      "Designed adaptive workout recommendation system",
+      "Built offline functionality for use during workouts"
+    ],
+    repoUrl: "#",
+    liveUrl: "#",
+    timeline: "5 months",
+    role: "Mobile Developer"
+  }
+];
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [selectedProject, setSelectedProject] = useState<ProjectDetailsProps["project"] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Set initial section based on URL hash
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
     if (hash) {
       setActiveSection(hash);
     }
   }, []);
+
+  const handleProjectClick = (project: any) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
   const renderSection = () => {
     switch (activeSection) {
@@ -218,47 +359,19 @@ const Index = () => {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <ProjectCard
-                  title="E-Commerce Platform"
-                  description="A full-featured online shopping platform with payment processing, user authentication, and inventory management."
-                  image="/lovable-uploads/05bf8120-90a5-4620-822f-61f2ad9fe5a9.png"
-                  actionLabel="View Project"
-                />
-                
-                <ProjectCard
-                  title="Health Dashboard"
-                  description="An interactive dashboard for tracking health metrics with data visualization and personalized recommendations."
-                  image="/lovable-uploads/72b4d528-a506-432c-9f74-614feb3f59f8.png"
-                  actionLabel="View Project"
-                />
-                
-                <ProjectCard
-                  title="Portfolio Website"
-                  description="A modern portfolio website showcasing projects, skills, and experience with a sleek and responsive design."
-                  image="/lovable-uploads/b8f0fe64-a3d7-41f4-a984-c300d900a3c7.png"
-                  actionLabel="View Project"
-                />
-                
-                <ProjectCard
-                  title="Task Management App"
-                  description="A collaborative task management application with real-time updates, file sharing, and team communication features."
-                  image="/lovable-uploads/9ab79394-c30f-413e-8dea-5ff486b28abe.png"
-                  actionLabel="View Project"
-                />
-                
-                <ProjectCard
-                  title="Social Media Platform"
-                  description="A social networking platform with user profiles, news feeds, messaging, and content sharing capabilities."
-                  image="/lovable-uploads/06b97919-d2fb-4bc4-b977-f466c48ff6f0.png"
-                  actionLabel="View Project"
-                />
-                
-                <ProjectCard
-                  title="Mobile Fitness App"
-                  description="A mobile application for tracking workouts, nutrition, and fitness goals with personalized coaching and progress tracking."
-                  image="/lovable-uploads/a0bcd973-31c1-4739-b7ef-dad53221c251.png"
-                  actionLabel="View Project"
-                />
+                {projectsData.map((project, index) => (
+                  <ProjectCard
+                    key={`project-${index}`}
+                    title={project.title}
+                    description={project.description}
+                    image={project.image}
+                    actionLabel="View Details"
+                    technologies={project.technologies}
+                    repoUrl={project.repoUrl}
+                    liveUrl={project.liveUrl}
+                    onAction={() => handleProjectClick(project)}
+                  />
+                ))}
               </div>
             </div>
           </section>
@@ -343,6 +456,14 @@ const Index = () => {
       <main className="animate-fade-in">
         {renderSection()}
       </main>
+
+      {selectedProject && (
+        <ProjectDetails 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          project={selectedProject} 
+        />
+      )}
 
       <footer className="py-8 px-6 bg-card/50 border-t border-border pb-24">
         <div className="container mx-auto">
