@@ -5,7 +5,6 @@
 
 @layer base {
   :root {
-    /* Cosmic Krishna Forge Theme - Dark theme by default */
     --background: 222 45% 6%;
     --foreground: 210 40% 98%;
 
@@ -16,7 +15,7 @@
     --popover-foreground: 210 40% 98%;
 
     --primary: 45 100% 50%;  /* Divine Gold */
-    --primary-foreground: 0 0% 0%;  /* Black for contrast with gold */
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 195 100% 50%;  /* Neon Blue */
     --secondary-foreground: 210 40% 98%;
@@ -27,23 +26,14 @@
     --muted: 217 33% 20%;
     --muted-foreground: 215 20% 70%;
 
-    --destructive: 0 62% 30%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217 33% 20%;
     --input: 217 33% 20%;
-    --ring: 45 100% 50%;  /* Divine Gold */
+    --ring: 45 100% 50%;
 
-    --radius: 1rem;
-
-    --sidebar-background: 222 45% 5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 45 100% 50%; /* Divine Gold */
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 240 10% 16%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 240 10% 16%;
-    --sidebar-ring: 45 100% 50%; /* Divine Gold */
+    --radius: 0.5rem;
   }
 
   .light {
@@ -53,16 +43,16 @@
     --card: 0 0% 98%;
     --card-foreground: 222 84% 5%;
 
-    --popover: 0 0% 100%;
+    --popover: 0 0% 98%;
     --popover-foreground: 222 84% 5%;
 
-    --primary: 45 100% 45%;  /* Divine Gold - darker for light mode */
+    --primary: 45 100% 45%;  /* Divine Gold */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 195 100% 45%;  /* Neon Blue - darker for light mode */
+    --secondary: 195 100% 45%;  /* Neon Blue */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 270 70% 55%;  /* Spiritual Purple - darker for light mode */
+    --accent: 270 70% 55%;  /* Spiritual Purple */
     --accent-foreground: 0 0% 100%;
 
     --muted: 210 40% 96%;
@@ -73,16 +63,7 @@
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 45 100% 45%;  /* Divine Gold - darker for light mode */
-
-    --sidebar-background: 210 40% 96%;
-    --sidebar-foreground: 240 5% 26%;
-    --sidebar-primary: 45 100% 45%;  /* Divine Gold - darker for light mode */
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 5% 96%;
-    --sidebar-accent-foreground: 240 6% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 45 100% 45%;  /* Divine Gold - darker for light mode */
+    --ring: 45 100% 45%;  /* Divine Gold */
   }
 }
 
@@ -100,183 +81,42 @@
     background-attachment: fixed;
   }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--card));
-    background-image: linear-gradient(to bottom, rgba(0, 191, 255, 0.05), rgba(255, 215, 0, 0.05));
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted));
-    border-radius: 4px;
-    box-shadow: inset 0 0 5px rgba(0, 191, 255, 0.3);
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary)/0.6);
-    box-shadow: inset 0 0 8px rgba(255, 215, 0, 0.5);
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite];
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-card/70 backdrop-blur-xl border border-white/10 shadow-lg;
-  }
-  
-  .text-gradient-primary {
-    @apply bg-divine-gradient bg-clip-text text-transparent;
-  }
-  
-  .text-gradient-secondary {
-    @apply bg-neon-gradient bg-clip-text text-transparent;
+    @apply rounded-xl border border-primary/10 bg-background/50 backdrop-blur-md shadow-lg shadow-primary/5;
   }
   
   .hover-scale {
-    @apply transition-transform duration-300 hover:scale-[1.02];
+    @apply transition-all duration-300 hover:scale-105;
   }
   
-  .section-heading {
-    @apply text-3xl font-bold mb-4 flex items-center gap-2 relative;
+  .animate-pulse-slow {
+    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
   
-  .section-heading::before {
-    content: "";
-    @apply block w-12 h-1 bg-primary rounded absolute -bottom-2;
-  }
-
-  .hover-card {
-    @apply relative border border-border/40 backdrop-blur-sm;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .hover-card::before {
-    content: "";
-    @apply absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500;
-    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), 
-                rgba(255, 215, 0, 0.06),
-                transparent 40%);
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .hover-card:hover {
-    box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.08);
-  }
-
-  .hover-card:hover::before {
-    opacity: 1;
-  }
-
-  .spotlight {
-    @apply absolute inset-0 opacity-0 pointer-events-none;
-    background: radial-gradient(
-      circle at var(--x) var(--y),
-      hsl(var(--primary) / 0.15),
-      transparent 80%
-    );
-  }
-
-  .shimmer {
-    @apply relative overflow-hidden before:absolute before:inset-0 before:bg-shimmer before:bg-[length:1000px_100%];
+  .animation-delay-2000 {
+    animation-delay: 2s;
   }
   
-  /* Cosmic Krishna Forge Components */
-  .cosmic-card {
-    @apply relative overflow-hidden rounded-2xl backdrop-blur-sm;
-    background: linear-gradient(135deg, rgba(26, 31, 44, 0.8) 0%, rgba(34, 31, 38, 0.9) 100%);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  .text-gradient-secondary {
+    @apply bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite];
   }
   
-  .cosmic-card::before {
-    content: "";
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
-    background: linear-gradient(135deg, 
-                rgba(255, 215, 0, 0.05) 0%, 
-                rgba(0, 191, 255, 0.05) 50%,
-                rgba(255, 215, 0, 0.05) 100%);
-    z-index: -1;
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite];
   }
   
-  .cosmic-card:hover::before {
-    @apply opacity-100;
-  }
-  
-  .holographic-text {
-    @apply font-bold relative;
-    background: linear-gradient(90deg, 
-                #FFD700 0%, 
-                #FFBF00 25%, 
-                #00BFFF 50%, 
-                #007FFF 75%, 
-                #FFD700 100%);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: shine 5s linear infinite;
-  }
-  
-  .repulsor-glow {
-    @apply relative;
-  }
-  
-  .repulsor-glow::after {
-    content: "";
-    @apply absolute inset-0 rounded-full opacity-0 transition-opacity duration-300;
-    box-shadow: 0 0 15px 5px rgba(0, 191, 255, 0.5), 
-                0 0 30px 10px rgba(0, 127, 255, 0.3);
-  }
-  
-  .repulsor-glow:hover::after {
-    @apply opacity-100;
+  .cursor-dot {
+    @apply fixed z-[999] pointer-events-none w-6 h-6 rounded-full bg-transparent border border-primary/50 -translate-x-1/2 -translate-y-1/2 transition-transform duration-100;
   }
   
   .galaxy-background {
-    @apply fixed inset-0 -z-10 opacity-50 animate-galaxy-spin;
-    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='galaxy' cx='50%25' cy='50%25' r='50%25' fx='50%25' fy='50%25'%3E%3Cstop offset='0%25' style='stop-color:rgba(0,0,0,0);stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:rgba(0,191,255,0.03);stop-opacity:1' /%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23galaxy)'/%3E%3C/svg%3E");
-  }
-  
-  @keyframes shine {
-    to {
-      background-position: 200% center;
-    }
-  }
-  
-  .hologram-border {
-    @apply relative rounded-2xl overflow-hidden;
-  }
-  
-  .hologram-border::before {
-    content: "";
-    @apply absolute inset-0 rounded-2xl;
-    background: linear-gradient(90deg, 
-                rgba(0, 191, 255, 0.5) 0%, 
-                rgba(255, 215, 0, 0.5) 25%, 
-                rgba(0, 191, 255, 0.5) 50%, 
-                rgba(255, 215, 0, 0.5) 75%, 
-                rgba(0, 191, 255, 0.5) 100%);
-    background-size: 400% 100%;
-    animation: border-flow 8s linear infinite;
-    z-index: -1;
-    filter: blur(8px);
-    opacity: 0.3;
-  }
-  
-  @keyframes border-flow {
-    0% {
-      background-position: 0% 0%;
-    }
-    100% {
-      background-position: 400% 0%;
-    }
+    @apply fixed inset-0 -z-10 opacity-50 animate-pulse-slow;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='galaxy' cx='50%25' cy='50%25' r='50%25' fx='50%25' fy='50%25'%3E%3Cstop offset='0%25' style='stop-color:rgba(0,191,255,0.03);stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:rgba(0,0,0,0);stop-opacity:1' /%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23galaxy)'/%3E%3C/svg%3E");
   }
 }
