@@ -21,6 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
     
     <style>
       @keyframes galaxy-rotation {
@@ -39,14 +40,112 @@
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%2300BFFF' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 40 599 102 382 V229'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 40 599 102 382 V229'/%3E%3C/g%3E%3Cg fill='%23FFD700'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='905' r='5'/%3E%3Ccircle cx='578' cy='842' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
         animation: galaxy-rotation 240s linear infinite;
       }
+      
+      .cosmic-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        opacity: 0.03;
+        background-size: 50px 50px;
+        background-image: 
+          linear-gradient(to right, rgba(0, 191, 255, 0.1) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0, 191, 255, 0.1) 1px, transparent 1px);
+      }
+      
+      .cosmic-portal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200vh;
+        height: 200vh;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.01) 0%, rgba(0, 191, 255, 0.01) 50%, transparent 70%);
+        z-index: -3;
+        animation: pulse-slow 10s ease-in-out infinite;
+      }
+      
+      @keyframes pulse-slow {
+        0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+        50% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      }
     </style>
   </head>
 
   <body class="dark">
     <div class="galaxy-background"></div>
+    <div class="cosmic-grid"></div>
+    <div class="cosmic-portal"></div>
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      // Dynamic cursor effect
+      document.addEventListener('DOMContentLoaded', function() {
+        const cursorDot = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        document.body.appendChild(cursorDot);
+        
+        const cursorRing = document.createElement('div');
+        cursorRing.className = 'cursor-ring';
+        document.body.appendChild(cursorRing);
+        
+        document.addEventListener('mousemove', function(e) {
+          const x = e.clientX;
+          const y = e.clientY;
+          
+          cursorDot.style.cssText = `
+            position: fixed;
+            top: ${y}px;
+            left: ${x}px;
+            width: 6px;
+            height: 6px;
+            background: hsl(var(--primary));
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            pointer-events: none;
+            transition: width 0.2s, height 0.2s;
+            box-shadow: 0 0 10px 1px rgba(var(--primary), 0.7);
+          `;
+          
+          cursorRing.style.cssText = `
+            position: fixed;
+            top: ${y}px;
+            left: ${x}px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(var(--secondary), 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9998;
+            pointer-events: none;
+            transition: width 0.15s, height 0.15s, transform 0.15s;
+          `;
+        });
+        
+        // Scale cursor on clickable elements
+        document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            cursorRing.style.width = '50px';
+            cursorRing.style.height = '50px';
+            cursorDot.style.width = '8px';
+            cursorDot.style.height = '8px';
+          });
+          
+          el.addEventListener('mouseleave', () => {
+            cursorRing.style.width = '30px';
+            cursorRing.style.height = '30px';
+            cursorDot.style.width = '6px';
+            cursorDot.style.height = '6px';
+          });
+        });
+      });
+    </script>
   </body>
 </html>
