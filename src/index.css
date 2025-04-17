@@ -144,4 +144,43 @@
     content: "";
     @apply block w-12 h-1 bg-primary rounded absolute -bottom-2;
   }
+
+  .hover-card {
+    @apply relative border border-border/40 backdrop-blur-sm;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hover-card::before {
+    content: "";
+    @apply absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 255, 255, 0.06),
+                transparent 40%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hover-card:hover {
+    box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .hover-card:hover::before {
+    opacity: 1;
+  }
+
+  .spotlight {
+    @apply absolute inset-0 opacity-0 pointer-events-none;
+    background: radial-gradient(
+      circle at var(--x) var(--y),
+      hsl(var(--primary) / 0.15),
+      transparent 80%
+    );
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:bg-shimmer before:bg-[length:1000px_100%];
+  }
 }

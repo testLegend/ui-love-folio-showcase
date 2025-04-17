@@ -160,7 +160,46 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
-				}
+				},
+				'shimmer': {
+					'0%': {
+						backgroundPosition: '-1000px 0',
+					},
+					'100%': {
+						backgroundPosition: '1000px 0',
+					},
+				},
+				'spotlight': {
+					'0%': {
+						opacity: '0',
+						transform: 'translate(-72%, -62%) scale(0.5)',
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translate(-50%,-40%) scale(1)',
+					},
+				},
+				'ripple': {
+					'0%': {
+						transform: 'scale(0.8)',
+						opacity: '1',
+					},
+					'100%': {
+						transform: 'scale(2.4)',
+						opacity: '0',
+					},
+				},
+				'tilt': {
+					'0%, 50%, 100%': {
+						transform: 'rotate(0deg)',
+					},
+					'25%': {
+						transform: 'rotate(2deg)',
+					},
+					'75%': {
+						transform: 'rotate(-2deg)',
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -172,7 +211,11 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'blur-in': 'blur-in 0.7s ease-out',
 				'rotate-slow': 'rotate-slow 10s linear infinite',
-				'slide-up-fade': 'slide-up-fade 0.7s ease-out'
+				'slide-up-fade': 'slide-up-fade 0.7s ease-out',
+				'shimmer': 'shimmer 2s infinite linear',
+				'spotlight': 'spotlight 2s ease 0.5s 1 forwards',
+				'ripple': 'ripple 2s cubic-bezier(0, 0.5, 0.5, 1) infinite',
+				'tilt': 'tilt 10s ease-in-out infinite',
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif']
@@ -183,7 +226,9 @@ export default {
 				'gradient-green': 'linear-gradient(90deg, hsl(170, 75%, 41%) 0%, hsl(150, 75%, 41%) 100%)',
 				'gradient-pink': 'linear-gradient(90deg, hsl(320, 70%, 60%) 0%, hsl(340, 70%, 60%) 100%)',
 				'gradient-grid': 'linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
-				'gradient-conic': 'conic-gradient(from 225deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)), hsl(var(--primary)))'
+				'gradient-conic': 'conic-gradient(from 225deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)), hsl(var(--primary)))',
+				'shimmer': 'linear-gradient(to right, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0))',
+				'spotlight': 'radial-gradient(circle at center, hsl(var(--primary) / 0.15) 0%, transparent 80%)',
 			}
 		}
 	},

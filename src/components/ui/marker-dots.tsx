@@ -32,9 +32,9 @@ const MarkerDots = ({
   
   const renderDots = (count: number, type: "optimal" | "in-range" | "out-of-range") => {
     const colorClass = {
-      "optimal": "text-secondary",
-      "in-range": "text-yellow-400",
-      "out-of-range": "text-accent"
+      "optimal": "bg-secondary",
+      "in-range": "bg-yellow-400",
+      "out-of-range": "bg-accent"
     };
     
     const animationDelays = ['0s', '0.1s', '0.2s', '0.3s', '0.4s', '0.5s', '0.6s', '0.7s', '0.8s', '0.9s'];
